@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Breltz × Hawky — Return-Aware Growth (Prototype)</title>
+<style>
+:root{--bg:#0f1220;--panel:#171b2e;--panel2:#1e2340;--line:#2a3158;--tx:#e8eaf6;--mut:#9aa3c7;--ac:#7c8cff;--ok:#3ddc97;--bad:#ff6b6b;--warn:#ffb84d}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--tx);display:flex;min-height:100vh}
+nav{width:230px;background:var(--panel);border-right:1px solid var(--line);padding:18px 12px;position:sticky;top:0;height:100vh;flex-shrink:0}
+nav h1{font-size:15px;margin:0 8px 4px}nav small{color:var(--mut);display:block;margin:0 8px 16px;font-size:11px}
+nav button{display:block;width:100%;text-align:left;background:none;border:0;color:var(--mut);padding:10px;border-radius:8px;font-size:13px;cursor:pointer;margin-bottom:2px}
+nav button.on,nav button:hover{background:var(--panel2);color:var(--tx)}
+main{flex:1;padding:24px 28px;max-width:1200px}
+h2{margin:0 0 4px;font-size:21px}.sub{color:var(--mut);font-size:13px;margin-bottom:18px}
+.grid{display:grid;gap:14px}.g4{grid-template-columns:repeat(4,1fr)}.g2{grid-template-columns:1fr 1fr}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+.kpi b{font-size:26px;display:block}.kpi span{font-size:12px;color:var(--mut)}
+.bad{color:var(--bad)}.ok{color:var(--ok)}.warn{color:var(--warn)}
+.why{background:#1b2150;border-left:3px solid var(--ac);padding:10px 12px;border-radius:6px;font-size:12px;color:#c9d0ff;margin-top:14px}
+.why i{color:var(--mut)}
+.bar{display:flex;align-items:center;gap:8px;font-size:12px;margin:7px 0}.bar .l{width:130px;color:var(--mut)}
+.bar .t{flex:1;background:#12162b;border-radius:5px;height:14px;overflow:hidden}.bar .f{height:100%;background:var(--ac)}.bar .v{width:46px;text-align:right}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--mut);font-weight:500;font-size:12px}
+.tag{display:inline-block;padding:2px 8px;border-radius:99px;font-size:11px;margin:1px}.tag.r{background:#4a1f2a;color:#ff9aa5}.tag.g{background:#1b4332;color:#7ff0bb}.tag.y{background:#4a3a14;color:#ffd27a}
+.seg{display:inline-flex;background:var(--panel2);border-radius:8px;padding:3px;margin-bottom:12px}.seg button{background:none;border:0;color:var(--mut);padding:6px 14px;border-radius:6px;cursor:pointer;font-size:12px}.seg button.on{background:var(--ac);color:#fff}
+textarea,select{width:100%;background:#12162b;border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:10px;font-size:13px;font-family:inherit}
+.btn{background:var(--ac);border:0;color:#fff;padding:9px 16px;border-radius:8px;cursor:pointer;font-size:13px}.btn.sec{background:var(--panel2);color:var(--tx)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.phone{width:340px;margin:0 auto;background:#fff;color:#1b1b1b;border-radius:28px;padding:18px 16px;border:8px solid #2a3158;min-height:560px}
+.phone h3{margin:0 0 4px;font-size:16px}.phone p{font-size:12.5px;color:#555;margin:4px 0 10px}
+.opt{border:1px solid #d6d9e6;border-radius:10px;padding:10px;margin:7px 0;font-size:13px;cursor:pointer}.opt:hover,.opt.sel{border-color:#5865f2;background:#f1f3ff}
+.pbtn{width:100%;background:#5865f2;color:#fff;border:0;padding:11px;border-radius:10px;margin-top:8px;cursor:pointer;font-size:13px}.pbtn.g{background:#eef0fa;color:#333}
+.fit{background:#f1f3ff;border-radius:10px;padding:10px;font-size:12.5px;margin:8px 0}
+.vid{background:#222;color:#fff;border-radius:10px;height:110px;display:flex;align-items:center;justify-content:center;font-size:12px;margin:8px 0}
+.sl label{display:flex;justify-content:space-between;font-size:12px;color:var(--mut);margin-top:10px}.sl input{width:100%}
+.warnbox{background:#3a1f26;border:1px solid #7a2d3b;border-radius:8px;padding:10px;font-size:13px;margin:8px 0}.okbox{background:#16342b;border:1px solid #2a7a5a;border-radius:8px;padding:10px;font-size:13px;margin:8px 0}
+.sec2{display:none}.sec2.on{display:block}
+.note{font-size:11px;color:var(--mut);margin-top:10px}
+@media(max-width:900px){body{flex-direction:column}nav{width:100%;height:auto;position:static;display:flex;flex-wrap:wrap}.g4,.g2{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<nav>
+  <h1>Breltz × Hawky</h1><small>Return-Aware Growth · prototype · illustrative data</small>
+  <button class="on" data-s="s1">1 · Monday Command Center</button>
+  <button data-s="s2">2 · Creative Profitability</button>
+  <button data-s="s3">3 · Claim Checker</button>
+  <button data-s="s4">4 · Listing Consistency</button>
+  <button data-s="s5">5 · Smart Return Flow</button>
+  <button data-s="s6">6 · Impact Simulator</button>
+  <div class="note" style="padding:0 8px">All figures are illustrative, shaped to match the discovery call. Real numbers appear after the data join (Phase 1).</div>
+</nav>
+<main>
+
+<!-- 1 -->
+<section class="sec2 on" id="s1">
+  <h2>Monday Returns Command Center</h2>
+  <div class="sub">One set of numbers for the Monday meeting: why people return, by product, channel, ad and customer type.</div>
+  <div class="grid g4">
+    <div class="card kpi"><b class="bad">30%</b><span>Dashboard "return rate" (everything that comes back)</span></div>
+    <div class="card kpi"><b class="warn">~6%</b><span>RTO of website orders (COD refusals: 35% COD × ~17.5%)</span></div>
+    <div class="card kpi"><b class="bad">21–22%</b><span>Website customer-initiated returns · target &lt; 12%</span></div>
+    <div class="card kpi"><b>9%</b><span>Contribution margin · target ≥ 18%</span></div>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card"><b>Customer-initiated return % by channel</b>
+      <div class="bar"><span class="l">Myntra</span><span class="t"><span class="f" style="width:31%;background:var(--bad)"></span></span><span class="v">31%</span></div>
+      <div class="bar"><span class="l">Website</span><span class="t"><span class="f" style="width:21.5%;background:var(--warn)"></span></span><span class="v">21.5%</span></div>
+      <div class="bar"><span class="l">Amazon</span><span class="t"><span class="f" style="width:13.5%;background:var(--ok)"></span></span><span class="v">13.5%</span></div>
+      <div class="note">Amazon shows a dimension image with a person for scale + 2,400 reviews. Myntra still shows the old v1 photos.</div>
+    </div>
+    <div class="card"><b>Return % by SKU / colour (illustrative)</b>
+      <div class="bar"><span class="l">Commuter Dusty Rose</span><span class="t"><span class="f" style="width:34%;background:var(--bad)"></span></span><span class="v">34%</span></div>
+      <div class="bar"><span class="l">Commuter Sage Green</span><span class="t"><span class="f" style="width:33%;background:var(--bad)"></span></span><span class="v">33%</span></div>
+      <div class="bar"><span class="l">Voyager 40L</span><span class="t"><span class="f" style="width:26%;background:var(--warn)"></span></span><span class="v">26%</span></div>
+      <div class="bar"><span class="l">Commuter Black</span><span class="t"><span class="f" style="width:22%;background:var(--warn)"></span></span><span class="v">22%</span></div>
+      <div class="bar"><span class="l">School bags</span><span class="t"><span class="f" style="width:3%;background:var(--ok)"></span></span><span class="v">3%</span></div>
+    </div>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card"><b>Why they return: today vs. after classification</b>
+      <div class="note">TODAY — dropdown: "Didn't like the product" &gt; 50% (tells us nothing)</div>
+      <div class="bar"><span class="l">After AI-tagging tickets</span></div>
+      <div class="bar"><span class="l">Smaller than expected</span><span class="t"><span class="f" style="width:28%"></span></span><span class="v">28%</span></div>
+      <div class="bar"><span class="l">Laptop fit</span><span class="t"><span class="f" style="width:24%"></span></span><span class="v">24%</span></div>
+      <div class="bar"><span class="l">Colour mismatch</span><span class="t"><span class="f" style="width:16%"></span></span><span class="v">16%</span></div>
+      <div class="bar"><span class="l">Bracketing (2 colours)</span><span class="t"><span class="f" style="width:14%"></span></span><span class="v">14%</span></div>
+      <div class="bar"><span class="l">Quality / damaged</span><span class="t"><span class="f" style="width:6%;background:var(--ok)"></span></span><span class="v">6%</span></div>
+      <div class="bar"><span class="l">Other</span><span class="t"><span class="f" style="width:12%"></span></span><span class="v">12%</span></div>
+    </div>
+    <div class="card"><b>Cost of a return (what Farhan described)</b>
+      <table><tr><td>Reverse pickup</td><td>₹140–180</td></tr><tr><td>QC + repack + new tags</td><td>staff time, ~half of the ops week</td></tr><tr><td>Not resellable as new</td><td class="bad">12% → seconds sale at −40%</td></tr><tr><td>Stock locked in transit</td><td class="bad">8–10 days (300 Commuters stuck while site was OOS)</td></tr><tr><td>Grade A (unused, tags on)</td><td class="ok">75–80% of Commuter returns</td></tr></table>
+    </div>
+  </div>
+  <div class="why"><b>Why this screen:</b> separates RTO from customer returns (the 30% hides two different problems) and shows Grade-A returns are unused bags — a mismatch, not a defect. <i>[02:15] "that 30 includes RTO, no?" · [06:56] "75–80% are grade A" · [05:14] "the dropdown tells us nothing"</i></div>
+</section>
+
+<!-- 2 -->
+<section class="sec2" id="s2">
+  <h2>Creative Profitability: gross vs. net of returns</h2>
+  <div class="sub">Meta reports the purchase the moment it happens. This view re-ranks every ad after returns and reverse-logistics cost.</div>
+  <div class="seg" id="seg2"><button class="on" data-m="gross">Rank by Meta ROAS (today)</button><button data-m="net">Rank by Net ROAS (proposed)</button></div>
+  <div class="card"><table id="adtbl"></table>
+    <div class="note">Net ROAS = Meta ROAS × (1 − return rate) − return rate × 0.4 (reverse logistics + handling + markdown drag). Return rates and the 0.4 drag are illustrative placeholders to be replaced by real joined data.</div></div>
+  <div class="why"><b>Why this screen:</b> Sneha scales at &gt;3× and kills at &lt;1.8× on gross ROAS, so the ads that over-promise get the most budget. Flip the toggle: the "5×" hero creative drops while a plain studio-photo ad rises. <i>[04:11] scale rule · [09:12] "Meta thinks every purchase was a success" · [15:44] "I'm optimising for something that may be wrong"</i></div>
+</section>
+
+<!-- 3 -->
+<section class="sec2" id="s3">
+  <h2>Creative Claim Checker</h2>
+  <div class="sub">Runs before an ad goes live, inside the approval step that today happens on a WhatsApp group. Compares claims with the product spec.</div>
+  <div class="grid g2">
+    <div class="card">
+      <div class="row" style="margin-bottom:8px"><select id="skusel"><option>Commuter 28L (v2)</option></select></div>
+      <textarea id="copy" rows="6">Fits up to 16-inch laptops. The roomy 30L commuter that carries your laptop, lunch box, bottle and jacket. Dusty Rose, golden hour edition.</textarea>
+      <div class="row" style="margin-top:10px"><button class="btn" id="chk">Check against spec</button><button class="btn sec" id="ex1">Load safe copy</button></div>
+      <div class="note">Spec (source of truth): capacity 28 L · laptop up to 15.6" (16" is a tight fit, zip strains) · colour swatches shot in daylight studio.</div>
+    </div>
+    <div class="card"><b>Result</b><div id="res" class="note">Press "Check against spec".</div></div>
+  </div>
+  <div class="why"><b>Why this screen:</b> The agency changed overlay copy to "16-inch" in March; the spec says 15.6". The listing still says "30 L" on Myntra. No one on the product side reviews ad copy. <i>[10:22] "website says 15.6, I think" · [16:25] "product team doesn't really check the ad copy"</i></div>
+</section>
+
+<!-- 4 -->
+<section class="sec2" id="s4">
+  <h2>Listing Consistency Monitor</h2>
+  <div class="sub">Commuter 28L across channels versus the single product spec.</div>
+  <div class="card"><table>
+    <tr><th>Attribute</th><th>Spec (truth)</th><th>Website</th><th>Amazon</th><th>Myntra</th></tr>
+    <tr><td>Title / capacity</td><td>28 L</td><td><span class="tag g">28 L</span></td><td><span class="tag g">28 L</span></td><td><span class="tag r">30 L (stale)</span></td></tr>
+    <tr><td>Hero photos</td><td>v2 slim, built-in sleeve</td><td><span class="tag g">v2</span></td><td><span class="tag g">v2</span></td><td><span class="tag r">v1 with zip-in sleeve</span></td></tr>
+    <tr><td>Size-with-person image</td><td>Required</td><td><span class="tag r">Missing (cm in Specs tab)</span></td><td><span class="tag g">Present</span></td><td><span class="tag y">Unknown</span></td></tr>
+    <tr><td>Laptop claim</td><td>15.6" max</td><td><span class="tag g">15.6"</span></td><td><span class="tag g">15.6"</span></td><td><span class="tag y">Check</span></td></tr>
+    <tr><td>Colour accuracy (Sage / Rose)</td><td>Daylight, unfiltered</td><td><span class="tag g">Studio</span></td><td><span class="tag y">Mixed</span></td><td><span class="tag y">Mixed</span></td></tr>
+    <tr><td>Customer return rate</td><td>—</td><td>21.5%</td><td class="ok">13.5%</td><td class="bad">31%</td></tr>
+  </table></div>
+  <div class="why"><b>Why this screen:</b> the same bag is presented three ways and returned at three rates; the Myntra "it's just like that" explanation ignores a stale listing. Also catches future drift automatically. <i>[12:41] "Myntra still has the old photos… title says 30 litres" · [13:11] Amazon dimension image with person</i></div>
+</section>
+
+<!-- 5 -->
+<section class="sec2" id="s5">
+  <h2>Smart Return Flow (customer view)</h2>
+  <div class="sub">Replaces the useless dropdown. Gets a structured reason and tries to save the sale. Click through it.</div>
+  <div class="phone" id="phone"></div>
+  <div class="why"><b>Why this screen:</b> Pooja wants to catch the customer before the return and needs a better reason capture; sometimes the laptop does fit in the right compartment. Bracketing orders get recognised instead of silently refunded. <i>[15:57] "if we catch them early we can save it" · [11:50] two colours, return one · [13:33] WhatsApp reason requests got no replies</i></div>
+</section>
+
+<!-- 6 -->
+<section class="sec2" id="s6">
+  <h2>Impact Simulator</h2>
+  <div class="sub">What the website customer-return rate and margin could look like as each lever lands. Placeholder effects, to be calibrated in the pilot.</div>
+  <div class="grid g2">
+    <div class="card sl">
+      <label>Fix over-promising creatives &amp; PDP size image <span id="o1">−3.0 pts</span></label><input type="range" id="r1" min="0" max="6" step="0.5" value="3">
+      <label>True-colour photos / swatches for Sage &amp; Dusty Rose <span id="o2">−1.0 pts</span></label><input type="range" id="r2" min="0" max="3" step="0.5" value="1">
+      <label>Smart return flow save-rate <span id="o3">−2.0 pts</span></label><input type="range" id="r3" min="0" max="5" step="0.5" value="2">
+      <label>Bracketing policy (free exchange, fee on duplicate colours) <span id="o4">−1.5 pts</span></label><input type="range" id="r4" min="0" max="3" step="0.5" value="1.5">
+      <div class="note">Meta CAPI feedback is not a slider: it compounds over weeks by shifting spend toward lower-return audiences and creatives.</div>
+    </div>
+    <div class="card"><div class="grid g2"><div class="kpi"><b id="rr">—</b><span>Website customer return rate (21.5% today, target &lt; 12%)</span></div><div class="kpi"><b id="cm">—</b><span>Contribution margin (9% today, target ≥ 18%)</span></div></div>
+      <div id="tgt" class="okbox" style="margin-top:12px"></div>
+      <div class="note">Each 1 pt of return rate ≈ 0.7 pts of CM here (illustrative: reverse ₹160 + handling + markdown on ~12% non-resellable).</div></div>
+  </div>
+</section>
+</main>
+
+<script>
+// nav
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('nav button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+  document.querySelectorAll('.sec2').forEach(s=>s.classList.remove('on'));document.getElementById(b.dataset.s).classList.add('on');
+});
+
+// 2: creatives
+const ads=[
+ {n:'Riya — "What\'s in my bag" UGC (Commuter 28L)',g:5.0,r:.40,f:['Looks roomier (petite creator, 13" laptop)','Laptop fit','Smaller than expected']},
+ {n:'Carousel — "Fits up to 16-inch laptops"',g:4.5,r:.37,f:['Claim 16" vs spec 15.6"','Laptop fit']},
+ {n:'Ananya — Dusty Rose golden-hour reel',g:4.2,r:.42,f:['Filtered / warm tones','Colour mismatch']},
+ {n:'Static — Commuter Black, studio photos + size image',g:3.1,r:.17,f:[]},
+ {n:'School bag — WhatsApp / repeat customers',g:3.0,r:.04,f:[]},
+ {n:'Voyager 40L — travel video',g:2.6,r:.27,f:['Smaller than expected']}
+];
+const net=a=>a.g*(1-a.r)-a.r*0.4;
+let mode='gross';
+function renderAds(){
+  const rows=[...ads].sort((a,b)=>mode==='gross'?b.g-a.g:net(b)-net(a));
+  document.getElementById('adtbl').innerHTML='<tr><th>#</th><th>Creative</th><th>Meta ROAS</th><th>Return %</th><th>Net ROAS</th><th>Promise-gap flags</th><th>Action</th></tr>'+rows.map((a,i)=>{
+    const nv=net(a),act=nv>=2.8?['Scale','g']:nv>=1.8?['Hold / fix','y']:['Cut','r'];
+    const gAct=a.g>=3?'<span class="tag g">Scale (today)</span>':'';
+    return `<tr><td>${i+1}</td><td>${a.n}</td><td>${a.g.toFixed(1)}×</td><td class="${a.r>.3?'bad':a.r<.1?'ok':'warn'}">${Math.round(a.r*100)}%</td><td><b>${nv.toFixed(1)}×</b></td><td>${a.f.map(x=>'<span class="tag r">'+x+'</span>').join('')||'<span class="tag g">none</span>'}</td><td>${mode==='gross'?gAct:'<span class="tag '+act[1]+'">'+act[0]+'</span>'}</td></tr>`}).join('');
+}
+document.querySelectorAll('#seg2 button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#seg2 button').forEach(x=>x.classList.remove('on'));b.classList.add('on');mode=b.dataset.m;renderAds()});
+renderAds();
+
+// 3: claim checker
+const rules=[
+ {re:/16[\s-]*(inch|")/i,sev:'r',t:'Claim "16-inch laptop" conflicts with spec (15.6" max; 16" is a tight fit).',fix:'Use "Fits up to 15.6-inch laptops".'},
+ {re:/\b30\s*l\b|30\s*litre/i,sev:'r',t:'Capacity "30 L" is the old Commuter 30. v2 is 28 L.',fix:'Use "28 L".'},
+ {re:/roomy|spacious|huge/i,sev:'y',t:'Subjective size claim ("roomy") — a top return reason is "smaller than expected".',fix:'Show dimensions and a person-for-scale image instead.'},
+ {re:/golden hour|sunset|filter/i,sev:'y',t:'Colour shown in warm / filtered light for a colour variant (Dusty Rose, Sage).',fix:'Pair with an unfiltered daylight swatch; add "colour may vary with lighting".'},
+ {re:/lunch\s*box.*(bottle|jacket)|laptop.*lunch/i,sev:'y',t:'Implies a full load fits with a laptop — creator\'s 13" Air vs customer\'s larger laptop.',fix:'State the laptop size used in the video on screen.'}
+];
+function check(){
+  const txt=document.getElementById('copy').value,hits=rules.filter(r=>r.re.test(txt));
+  document.getElementById('res').innerHTML=hits.length?hits.map(h=>`<div class="${h.sev==='r'?'warnbox':'warnbox'}"><span class="tag ${h.sev}">${h.sev==='r'?'BLOCK':'REVIEW'}</span> ${h.t}<br><b>Suggested:</b> ${h.fix}</div>`).join('')+`<div class="note">${hits.filter(h=>h.sev==='r').length} blocking · ${hits.filter(h=>h.sev==='y').length} to review. Approver sees this before the creative is scaled.</div>`:'<div class="okbox">No spec conflicts found. Ready for approval.</div>';
+}
+document.getElementById('chk').onclick=check;
+document.getElementById('ex1').onclick=()=>{document.getElementById('copy').value='28L commuter with a padded compartment for laptops up to 15.6 inches. See the size with a person for scale on the product page. Colour shown in daylight.';check()};
+
+// 5: return flow
+const P=document.getElementById('phone');let st={};
+const html=x=>P.innerHTML=x;
+function s0(){html(`<h3>Return order #BR-48213</h3><p>Commuter 28L · Sage Green</p><p><b>What's the main reason?</b></p>
+ <div class="opt" onclick="s1('fit')">My laptop doesn't fit properly</div><div class="opt" onclick="s1('size')">Smaller than I expected</div><div class="opt" onclick="s1('colour')">Colour looks different</div><div class="opt" onclick="s1('dup')">I ordered two colours</div><div class="opt" onclick="s1('dmg')">Damaged / wrong item</div><div class="opt" onclick="s1('other')">Something else</div>`)}
+function s1(r){st.r=r;
+ const m={
+ fit:['Let\'s check the fit','<div class="fit">Which laptop do you have? <select id="lp" style="margin-top:6px"><option>13"–14"</option><option>15.6"</option><option>16"</option></select></div><div class="vid">▶ 20-sec video: use the padded laptop compartment</div>','fitres'],
+ size:['See it with a person for scale','<div class="fit">Capacity 28 L · 45 × 30 × 15 cm. Fits laptop, lunch box and a bottle — a jacket needs to go in the front pocket.</div><div class="vid">Size-comparison image</div>','save'],
+ colour:['Prefer a different colour?','<div class="fit">Lighting changes how Sage reads. We\'ll swap it for another colour — free exchange, no pickup charge.</div>','exch'],
+ dup:['Keep one, return one?','<div class="fit">We see another Commuter in your order. Free exchange stays free; returns of the second colour are processed as normal.</div>','out'],
+ dmg:['Sorry about that','<div class="fit">Upload a photo and we\'ll arrange a replacement.</div>','out'],
+ other:['Tell us more','<textarea rows="3" style="border:1px solid #ccc;color:#222;background:#fff" placeholder="Your reason..."></textarea>','out']}[r];
+ let btns;
+ if(m[2]==='fitres')btns=`<button class="pbtn" onclick="s2('saved')">This helped — I'll keep it</button><button class="pbtn g" onclick="s2('ret')">Still return it</button>`;
+ else if(m[2]==='save')btns=`<button class="pbtn" onclick="s2('saved')">Keep the bag</button><button class="pbtn g" onclick="s2('ret')">Continue return</button>`;
+ else if(m[2]==='exch')btns=`<button class="pbtn" onclick="s2('exch')">Exchange for another colour</button><button class="pbtn g" onclick="s2('ret')">Return for refund</button>`;
+ else btns=`<button class="pbtn" onclick="s2('ret')">Continue</button>`;
+ html(`<h3>${m[0]}</h3>${m[1]}${btns}`)}
+function s2(o){const tags={fit:'laptop_fit',size:'smaller_than_expected',colour:'colour_mismatch',dup:'bracketing',dmg:'damaged',other:'other'};
+ const title={saved:'Glad we could help!',exch:'Exchange booked',ret:'Return scheduled'}[o];
+ html(`<h3>${title}</h3><p>${o==='saved'?'Return cancelled — no pickup or QC cost.':o==='exch'?'New colour ships on pickup. Free exchange.':'Pickup in 2–3 days.'}</p>
+ <div class="fit"><b>Logged for Breltz (not shown to customers)</b><br>reason: ${tags[st.r]}<br>outcome: ${o}<br>order → ad / creator code linked<br>Net saved: ${o==='saved'?'₹160 pickup + QC + resale risk':o==='exch'?'Sale retained':'—'}</div>
+ <button class="pbtn g" onclick="s0()">Restart demo</button>`)}
+s0();
+
+// 6: simulator
+function sim(){
+  const v=[1,2,3,4].map(i=>+document.getElementById('r'+i).value);
+  v.forEach((x,i)=>document.getElementById('o'+(i+1)).textContent='−'+x.toFixed(1)+' pts');
+  const rr=21.5-v.reduce((a,b)=>a+b,0),cm=9+(21.5-rr)*0.7;
+  document.getElementById('rr').textContent=rr.toFixed(1)+'%';document.getElementById('rr').className=rr<12?'ok':'warn';
+  document.getElementById('cm').textContent=cm.toFixed(1)+'%';document.getElementById('cm').className=cm>=18?'ok':'warn';
+  const t=document.getElementById('tgt');const a=rr<12,b=cm>=18;
+  t.className=a&&b?'okbox':'warnbox';t.textContent=a&&b?'Both targets met without cutting ad spend.':(a?'Return target met; margin still short — needs the CAPI/net-ROAS loop and logistics savings.':'Not there yet. Move the levers, and remember CAPI feedback compounds over time.');
+}
+document.querySelectorAll('#s6 input').forEach(i=>i.oninput=sim);sim();
+</script>
+</body>
+</html>
